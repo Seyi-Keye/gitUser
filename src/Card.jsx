@@ -32,7 +32,7 @@ class Card extends Component {
         key={data.id}
         style={{
           display: 'inline-block',
-          border: '5px solid skyblue',
+          border: '5px solid black',
           minWidth: '33%',
           margin: '2px',
           padding: '10px',

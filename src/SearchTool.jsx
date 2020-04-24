@@ -14,7 +14,6 @@ class SearchTool extends Component {
     return (
       <div
         style={{
-          // display: 'flex',
           width: '100%',
           height: '100%',
           margin: 'auto',
@@ -37,7 +36,7 @@ class SearchTool extends Component {
             style={{
               width: '10%',
               height: '30px',
-              background: 'blue',
+              background: 'black',
               color: 'white',
             }}
           >
