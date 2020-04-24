@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Avatar from './Avatar';
 import Information from './Information';
+import stack from './stack';
 
 class Card extends Component {
   constructor(props) {
@@ -13,36 +14,33 @@ class Card extends Component {
 
   componentDidMount() {
     const { username } = this.props;
-    console.log('component will update rendering');
     this.fetchEventPayload(username);
   }
 
   handleDisplay = (data) => {
-    const result = data.map((datum, index) => {
-      return (
-        <div
-          key={index.toString()}
-          style={{
-            display: 'flex',
-            border: '5px solid white',
-            background: 'grey',
-            width: '70%',
-            // boxSizing: "border-box",
-            margin: 'auto',
-            padding: '10px',
-            height: '70px',
-          }}
-        >
-          <Avatar picture={datum.actor} />
-          <Information data={datum} />
-        </div>
-      );
-    });
-    return result;
+    return (
+      <div
+        key={data.id}
+        style={{
+          display: 'flex',
+          border: '5px solid white',
+          width: '30%',
+          margin: 'auto',
+          padding: '10px',
+          height: '100%',
+          borderRadius: '4%',
+        }}
+      >
+        <Avatar picture={data.avatar_url} />
+        <p style={{ color: 'grey', fontSize: 'bold' }} onClick={stack.pop}>
+          x
+        </p>
+        <Information data={data} />
+      </div>
+    );
   };
 
   fetchEventPayload = (username) => {
-    console.log('eafawfeaw');
     fetch(`https://api.github.com/users/${username}`)
       .then((data) => {
         if (data.status !== 200) {
@@ -52,8 +50,25 @@ class Card extends Component {
         return data.json();
       })
       .then((data) => {
+        const {
+          avatar_url,
+          followers,
+          following,
+          location,
+          name,
+          public_repos,
+        } = data;
+
+        stack.push({
+          avatar_url,
+          followers,
+          following,
+          location,
+          name,
+          public_repos,
+        });
+        // remove setState
         this.setState({ data });
-        console.log(data, 'is it u?');
       })
       .catch((error) => this.setState({ error }));
   };
@@ -63,12 +78,11 @@ class Card extends Component {
   };
 
   render() {
-    console.log('do we get here?');
     const data = this.state.data;
     const error = this.state.error;
     return (
-      <div>
-        {(data.length && this.handleDisplay(data)) || <p> NO results </p>}
+      <div style={{ margin: '10px' }}>
+        {data && this.handleDisplay(data)}
         {error && this.checkError(error)}
       </div>
     );

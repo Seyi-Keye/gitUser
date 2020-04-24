@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
-// import { Get } from 'react-axios';
+import Card from './Card';
 
 class SearchTool extends Component {
   constructor(Props) {
     super(Props);
     this.state = {
       username: '',
+      prevUsername: '',
+      submitted: false,
     };
   }
 
   handleSearchTextChange = (event) => {
     event.preventDefault();
-    this.setState({ username: event.target.value });
+    if (this.state.submitted) {
+      this.setState({ submitted: false });
+    }
+    this.setState({ username: event.target.value, submitted: false });
   };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    this.props.handleSearch(this.state.username);
+    this.setState({ submitted: true, prevUsername: this.state.username });
+    // this.props.handleSearch(this.state.username);
   };
 
   render() {
@@ -29,7 +35,7 @@ class SearchTool extends Component {
           marginTop: '5%',
         }}
       >
-        <form onSubmit={this.handleFormSubmit}>
+        <form>
           <input
             type="text"
             placeholder="Type github username"
@@ -55,6 +61,16 @@ class SearchTool extends Component {
             Search Github Users
           </button>
         </form>
+        {this.state.username.length && this.state.submitted ? (
+          <Card username={this.state.username} />
+        ) : (
+          ''
+        )}
+        {this.state.prevUsername.length && !this.state.submitted ? (
+          <Card username={this.state.prevUsername} />
+        ) : (
+          ''
+        )}
       </div>
     );
   }

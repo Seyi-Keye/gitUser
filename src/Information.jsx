@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 
 class Information extends Component {
   render() {
     const { data } = this.props;
-    const type = data.type;
-    const date = moment(data.created_at).toString();
-    const name = data.actor.display_login;
+    const { public_repos, name, location, followers, following } = data;
     return (
       <div
         style={{
@@ -15,7 +12,14 @@ class Information extends Component {
           padding: '10px',
         }}
       >
-        {data ? `${type} created on ${date} by ${name}` : ''}
+        <p>User Details</p>
+        <ul>
+          <li>Name: {name}</li>
+          <li>Location: {location}</li>
+          <li>Public Repositories: {public_repos}</li>
+          <li>Followers: {followers}</li>
+          <li>Following: {following}</li>
+        </ul>
       </div>
     );
   }

@@ -5,7 +5,7 @@ class Avatar extends Component {
     const avatar_url = 'http://svgur.com/i/65U.svg';
     let { picture } = this.props;
     picture = picture ? (
-      <img src={picture.avatar_url} alt="user avatar" />
+      <img src={picture} alt="user avatar" />
     ) : (
       <img src={avatar_url} alt="dafault avatar" />
     );
