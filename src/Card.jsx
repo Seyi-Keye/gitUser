@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Avatar from './Avatar';
 import Information from './Information';
-import stack from './stack';
+import UsernameContext from './UsernameContext';
 
 class Card extends Component {
+  static contextType = UsernameContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -12,30 +13,45 @@ class Card extends Component {
     };
   }
 
-  componentDidMount() {
-    const { username } = this.props;
-    this.fetchEventPayload(username);
+  componentDidUpdate(prevprops) {
+    if (prevprops.username !== this.props.username) {
+      this.setState({ error: '' });
+      this.fetchEventPayload(this.props.username);
+    }
   }
+
+  filterItem = (id) => {
+    this.setState({
+      data: this.state.data.filter((x) => x.id !== id),
+    });
+  };
 
   handleDisplay = (data) => {
     return (
       <div
         key={data.id}
         style={{
-          display: 'flex',
-          border: '5px solid white',
-          width: '30%',
-          margin: 'auto',
+          display: 'inline-block',
+          border: '5px solid skyblue',
+          minWidth: '33%',
+          margin: '2px',
           padding: '10px',
-          height: '100%',
           borderRadius: '4%',
+          marginTop: '10px',
         }}
       >
         <Avatar picture={data.avatar_url} />
-        <p style={{ color: 'grey', fontSize: 'bold' }} onClick={stack.pop}>
-          x
-        </p>
-        <Information data={data} />
+        <Information data={data} style={{ width: '80%' }} />
+        <div style={{ margin: '0' }}>
+          <p
+            style={{ color: 'grey', fontSize: '50px' }}
+            onClick={() => {
+              this.filterItem(data.id);
+            }}
+          >
+            x
+          </p>
+        </div>
       </div>
     );
   };
@@ -51,6 +67,7 @@ class Card extends Component {
       })
       .then((data) => {
         const {
+          id,
           avatar_url,
           followers,
           following,
@@ -59,16 +76,18 @@ class Card extends Component {
           public_repos,
         } = data;
 
-        stack.push({
+        const newData = {
+          id,
           avatar_url,
           followers,
           following,
           location,
           name,
           public_repos,
+        };
+        this.setState({
+          data: [...this.state.data.filter((x) => x.id !== id), newData],
         });
-        // remove setState
-        this.setState({ data });
       })
       .catch((error) => this.setState({ error }));
   };
@@ -81,8 +100,8 @@ class Card extends Component {
     const data = this.state.data;
     const error = this.state.error;
     return (
-      <div style={{ margin: '10px' }}>
-        {data && this.handleDisplay(data)}
+      <div className="container">
+        {data && data.map((user) => this.handleDisplay(user))}
         {error && this.checkError(error)}
       </div>
     );

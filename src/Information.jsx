@@ -5,13 +5,7 @@ class Information extends Component {
     const { data } = this.props;
     const { public_repos, name, location, followers, following } = data;
     return (
-      <div
-        style={{
-          color: 'white',
-          marginTop: '20px',
-          padding: '10px',
-        }}
-      >
+      <div className="information">
         <p>User Details</p>
         <ul>
           <li>Name: {name}</li>

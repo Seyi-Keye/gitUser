@@ -1,41 +1,27 @@
 import React, { Component } from 'react';
 import Card from './Card';
+import UsernameContext from './UsernameContext';
 
 class SearchTool extends Component {
-  constructor(Props) {
-    super(Props);
-    this.state = {
-      username: '',
-      prevUsername: '',
-      submitted: false,
-    };
-  }
-
-  handleSearchTextChange = (event) => {
-    event.preventDefault();
-    if (this.state.submitted) {
-      this.setState({ submitted: false });
-    }
-    this.setState({ username: event.target.value, submitted: false });
-  };
+  static contextType = UsernameContext;
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    this.setState({ submitted: true, prevUsername: this.state.username });
-    // this.props.handleSearch(this.state.username);
+    this.props.handleSearch(event.target.githubUsername.value);
   };
 
   render() {
     return (
       <div
         style={{
+          // display: 'flex',
           width: '100%',
           height: '100%',
           margin: 'auto',
           marginTop: '5%',
         }}
       >
-        <form>
+        <form onSubmit={this.handleFormSubmit}>
           <input
             type="text"
             placeholder="Type github username"
@@ -44,13 +30,10 @@ class SearchTool extends Component {
               height: '30px',
               padding: '2px',
             }}
-            value={this.state.username}
-            onChange={this.handleSearchTextChange}
             name="githubUsername"
           />
           <button
-            type="button"
-            onClick={this.handleFormSubmit}
+            type="submit"
             style={{
               width: '10%',
               height: '30px',
@@ -61,16 +44,7 @@ class SearchTool extends Component {
             Search Github Users
           </button>
         </form>
-        {this.state.username.length && this.state.submitted ? (
-          <Card username={this.state.username} />
-        ) : (
-          ''
-        )}
-        {this.state.prevUsername.length && !this.state.submitted ? (
-          <Card username={this.state.prevUsername} />
-        ) : (
-          ''
-        )}
+        <Card username={this.context} />
       </div>
     );
   }

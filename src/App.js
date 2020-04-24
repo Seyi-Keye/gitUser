@@ -1,38 +1,34 @@
 import React, { Component } from 'react';
-import UsernameContext from './UsernameContext';
 import SearchTool from './SearchTool';
+import UsernameContext from './UsernameContext';
 import './App.css';
 
 class App extends Component {
-  // constructor(props) {
-  //   // super(props);
-  //   // this.state = {
-  //   //   // name: '',
-  //   //   // data: []
-  //   // };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      data: [],
+    };
+  }
 
-  // handleSearch = (username) => {
-  //   console.log('entering', username);
-  //   this.setState({ name: username });
-  //   console.log('state', this.state.name);
-  // };
+  handleSearch = (username) => {
+    this.setState({ name: username });
+  };
 
   render() {
     return (
-      <UsernameContext.Provider value={''}>
+      <UsernameContext.Provider value={this.state.name}>
         <div
           className="App"
           style={{
+            display: 'flex',
             width: '100%',
-            height: 'auto',
             margin: 'auto',
-            background: 'skyBlue',
             padding: '20px',
           }}
         >
           <SearchTool handleSearch={this.handleSearch} />
-          {/* {this.state.name.length ? <GridView username={this.state.name} /> : ''} */}
         </div>
       </UsernameContext.Provider>
     );
