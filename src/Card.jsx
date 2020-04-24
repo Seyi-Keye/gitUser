@@ -101,7 +101,7 @@ class Card extends Component {
     const error = this.state.error;
     return (
       <div className="container">
-        {data && data.map((user) => this.handleDisplay(user))}
+        {data && data.reverse().map((user) => this.handleDisplay(user))}
         {error && this.checkError(error)}
       </div>
     );
