@@ -6,40 +6,36 @@ function Card(props) {
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
-  const fetchEventPayload = (username) => {
-    fetch(`https://api.github.com/users/${username}`)
-      .then((data) => {
-        if (data.status !== 200) {
-          console.log('error data', data.statusText);
-          throw new Error(data.statusText);
-        }
-        return data.json();
-      })
-      .then((result) => {
-        const {
-          id,
-          avatar_url,
-          followers,
-          following,
-          location,
-          login,
-          name,
-          public_repos,
-        } = result;
+  const fetchEventPayload = async (username) => {
+    try {
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      const result = await response.json();
 
-        const newData = {
-          id,
-          avatar_url,
-          followers,
-          following,
-          location,
-          login,
-          name,
-          public_repos,
-        };
-        return setData([...data.filter((x) => x.id !== id), newData]);
-      })
-      .catch((error) => setError(error));
+      const {
+        id,
+        avatar_url,
+        followers,
+        following,
+        location,
+        login,
+        name,
+        public_repos,
+      } = result;
+
+      const newData = {
+        id,
+        avatar_url,
+        followers,
+        following,
+        location,
+        login,
+        name,
+        public_repos,
+      };
+      return setData([...data.filter((x) => x.id !== id), newData]);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   useEffect(() => {
