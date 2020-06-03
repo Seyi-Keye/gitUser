@@ -3,11 +3,7 @@ import React from 'react';
 function Avatar(props) {
   const avatar_url = 'http://svgur.com/i/65U.svg';
   let { picture } = props;
-  picture = picture ? (
-    <img src={picture} alt="user avatar" />
-  ) : (
-    <img src={avatar_url} alt="dafault avatar" />
-  );
-  return picture;
+  picture = picture || avatar_url;
+  return <img src={picture} alt="avatar" />;
 }
 export default Avatar;

@@ -84,7 +84,7 @@ function Card(props) {
 
   return (
     <div className="container">
-      {data && data.reverse().map((user) => handleDisplay(user))}
+      {data.reverse().map(handleDisplay)}
       {error && checkError(error)}
     </div>
   );
