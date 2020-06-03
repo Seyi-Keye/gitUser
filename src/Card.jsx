@@ -1,32 +1,23 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import Information from './Information';
-import UsernameContext from './UsernameContext';
 
-class Card extends Component {
-  static contextType = UsernameContext;
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      error: '',
-    };
-  }
+function Card(props) {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState('');
 
-  componentDidUpdate(prevprops) {
-    if (prevprops.username !== this.props.username) {
-      this.setState({ error: '' });
-      this.fetchEventPayload(this.props.username);
+  useEffect(() => {
+    if (props.username) {
+      console.log(props.username);
+      fetchEventPayload(props.username);
     }
-  }
+  }, [props.username]);
 
-  filterItem = (id) => {
-    this.setState({
-      data: this.state.data.filter((x) => x.id !== id),
-    });
+  const filterItem = (id) => {
+    setData(data.filter((x) => x.id !== id));
   };
 
-  handleDisplay = (data) => {
+  const handleDisplay = (data) => {
     return (
       <div
         key={data.id}
@@ -46,7 +37,7 @@ class Card extends Component {
           <p
             style={{ color: 'grey', fontSize: '50px' }}
             onClick={() => {
-              this.filterItem(data.id);
+              filterItem(data.id);
             }}
           >
             x
@@ -56,7 +47,7 @@ class Card extends Component {
     );
   };
 
-  fetchEventPayload = (username) => {
+  const fetchEventPayload = (username) => {
     fetch(`https://api.github.com/users/${username}`)
       .then((data) => {
         if (data.status !== 200) {
@@ -65,7 +56,7 @@ class Card extends Component {
         }
         return data.json();
       })
-      .then((data) => {
+      .then((result) => {
         const {
           id,
           avatar_url,
@@ -74,7 +65,7 @@ class Card extends Component {
           location,
           name,
           public_repos,
-        } = data;
+        } = result;
 
         const newData = {
           id,
@@ -85,26 +76,20 @@ class Card extends Component {
           name,
           public_repos,
         };
-        this.setState({
-          data: [...this.state.data.filter((x) => x.id !== id), newData],
-        });
+        return setData([...data.filter((x) => x.id !== id), newData]);
       })
-      .catch((error) => this.setState({ error }));
+      .catch((error) => setError(error));
   };
 
-  checkError = (error) => {
+  const checkError = (error) => {
     return <p style={{ padding: '10px', color: 'red' }}>{error.message}</p>;
   };
 
-  render() {
-    const data = this.state.data;
-    const error = this.state.error;
-    return (
-      <div className="container">
-        {data && data.reverse().map((user) => this.handleDisplay(user))}
-        {error && this.checkError(error)}
-      </div>
-    );
-  }
+  return (
+    <div className="container">
+      {data && data.reverse().map((user) => handleDisplay(user))}
+      {error && checkError(error)}
+    </div>
+  );
 }
 export default Card;

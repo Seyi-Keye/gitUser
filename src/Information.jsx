@@ -6,7 +6,7 @@ class Information extends Component {
     const { public_repos, name, location, followers, following } = data;
     return (
       <div className="information">
-        <p>User Details</p>
+        <b>User Details</b>
         <ul>
           <li>Name: {name}</li>
           <li>Location: {location}</li>
