@@ -20,7 +20,7 @@ function Information(props) {
           Name: <b>{name}</b>
         </li>
         <li>
-          Login: <em>{login}</em>
+          Username: <em>{login}</em>
         </li>
         <li>Location: {location}</li>
         <li>Public Repositories: {public_repos}</li>
