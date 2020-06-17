@@ -1,52 +1,29 @@
-import React, { Component } from 'react';
-import Card from './Card';
-import UsernameContext from './UsernameContext';
+import React, { useContext } from 'react';
+// import Card from './Card';
+// import UsernameContext from './UsernameContext';
+import './searchTool.scss';
 
-class SearchTool extends Component {
-  static contextType = UsernameContext;
+function SearchTool(props) {
+  // let usernameContext = useContext(UsernameContext);
 
-  handleFormSubmit = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    this.props.handleSearch(event.target.githubUsername.value);
+    props.handleSearch(event.target.githubUsername.value);
   };
 
-  render() {
-    return (
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          margin: 'auto',
-          marginTop: '5%',
-        }}
-      >
-        <form onSubmit={this.handleFormSubmit}>
-          <input
-            type="text"
-            placeholder="Type github username"
-            style={{
-              width: '20%',
-              height: '30px',
-              padding: '2px',
-            }}
-            name="githubUsername"
-          />
-          <button
-            type="submit"
-            style={{
-              width: '10%',
-              height: '30px',
-              background: 'black',
-              color: 'white',
-            }}
-          >
-            Search Github Users
-          </button>
-        </form>
-        <Card username={this.context} />
-      </div>
-    );
-  }
+  return (
+    <div className="searchTool">
+      <form onSubmit={handleFormSubmit}>
+        <input
+          type="text"
+          placeholder="Enter Github Username"
+          name="githubUsername"
+        />
+        <button type="submit">Search</button>
+      </form>
+      {/* <Card username={usernameContext} /> */}
+    </div>
+  );
 }
 
 export default SearchTool;

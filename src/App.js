@@ -1,38 +1,28 @@
-import React, { Component } from 'react';
+import React, { useContext, useState } from 'react';
+import Card from './Card';
 import SearchTool from './SearchTool';
 import UsernameContext from './UsernameContext';
-import './App.css';
+import './App.scss';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      data: [],
-    };
-  }
+function App() {
+  const [name, setName] = useState('');
+  // let usernameContext = useContext(UsernameContext);
 
-  handleSearch = (username) => {
-    this.setState({ name: username });
+  const handleSearch = (username) => {
+    setName(username);
   };
 
-  render() {
-    return (
-      <UsernameContext.Provider value={this.state.name}>
-        <div
-          className="App"
-          style={{
-            display: 'flex',
-            width: '100%',
-            margin: 'auto',
-            padding: '20px',
-          }}
-        >
-          <SearchTool handleSearch={this.handleSearch} />
+  return (
+    <UsernameContext.Provider value={name}>
+      <>
+        <header>GITUSER APP</header>
+        <div className="App">
+          <SearchTool handleSearch={handleSearch} />
         </div>
-      </UsernameContext.Provider>
-    );
-  }
+        <Card username={name} />
+      </>
+    </UsernameContext.Provider>
+  );
 }
 
 export default App;

@@ -1,0 +1,71 @@
+@import '_variable';
+
+.searchTool {
+  height: 100px;
+  width: 100%;
+  margin: auto;
+
+  input[type='text'] {
+    height: 40px;
+    padding: 10px;
+    font-size: medium;
+    width: 70%;
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 0 2px 2px 0;
+    border: 1px solid $black;
+    outline: none;
+  }
+
+  button[type='submit'] {
+    height: 40px;
+    font-size: medium;
+    margin: 0;
+    background-color: $brownish;
+    color: $grey;
+    border-radius: 0 2px 2px 0;
+    cursor: pointer;
+    border: 1px solid $black;
+  }
+
+  form {
+    width: 80%;
+    padding: 10px;
+    margin: auto;
+  }
+}
+
+@media (min-width: 720px) {
+  .searchTool {
+    width: 70%;
+
+    input[type='text'] {
+      width: 50%;
+    }
+
+    form {
+      width: 100%;
+      margin: auto;
+      padding: 10px;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .searchTool {
+    height: 100px;
+    width: 100%;
+    margin: auto;
+
+    input[type='text'] {
+      width: 90%;
+      margin: auto;
+    }
+
+    form {
+      width: 100%;
+      margin: auto;
+      padding: 10px 0px;
+    }
+  }
+}

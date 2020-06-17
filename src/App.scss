@@ -1,0 +1,27 @@
+@import '_variable';
+@import '_mixins';
+
+* {
+  box-sizing: border-box;
+  background-color: $grey;
+  margin: 10px;
+}
+
+.App {
+  @include layout-base(center, flex, 100%, auto, 10px 20px, 100px);
+}
+
+header {
+  @include layout-base($textAlign: center, $padding: 15px);
+  color: $black;
+  font-size: 40px;
+  font-family: 'Sriracha', cursive;
+  font-weight: bold;
+}
+
+@media (max-width: 400px) {
+  .header {
+    margin-bottom: 0px;
+    padding-bottom: 2px;
+  }
+}
