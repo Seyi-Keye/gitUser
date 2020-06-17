@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import Card from './Card';
-import UsernameContext from './UsernameContext';
+// import Card from './Card';
+// import UsernameContext from './UsernameContext';
+import './searchTool.scss';
 
 function SearchTool(props) {
-  let usernameContext = useContext(UsernameContext);
+  // let usernameContext = useContext(UsernameContext);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -11,38 +12,16 @@ function SearchTool(props) {
   };
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        margin: 'auto',
-        marginTop: '5%',
-      }}
-    >
+    <div className="searchTool">
       <form onSubmit={handleFormSubmit}>
         <input
           type="text"
-          placeholder="Type github username"
-          style={{
-            width: '20%',
-            height: '30px',
-            padding: '2px',
-          }}
+          placeholder="Enter Github Username"
           name="githubUsername"
         />
-        <button
-          type="submit"
-          style={{
-            width: '10%',
-            height: '30px',
-            background: 'black',
-            color: 'white',
-          }}
-        >
-          Search Github Users
-        </button>
+        <button type="submit">Search</button>
       </form>
-      <Card username={usernameContext} />
+      {/* <Card username={usernameContext} /> */}
     </div>
   );
 }

@@ -1,0 +1,15 @@
+@mixin layout-base(
+  $textAlign: null,
+  $display: null,
+  $width: null,
+  $margin: null,
+  $padding: null,
+  $height: null
+) {
+  text-align: $textAlign;
+  display: $display;
+  width: $width;
+  margin: $margin;
+  padding: $padding;
+  height: $height;
+}

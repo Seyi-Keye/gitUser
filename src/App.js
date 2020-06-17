@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import Card from './Card';
 import SearchTool from './SearchTool';
 import UsernameContext from './UsernameContext';
-import './App.css';
+import './App.scss';
 
 function App() {
   const [name, setName] = useState('');
+  // let usernameContext = useContext(UsernameContext);
 
   const handleSearch = (username) => {
     setName(username);
@@ -12,17 +14,13 @@ function App() {
 
   return (
     <UsernameContext.Provider value={name}>
-      <div
-        className="App"
-        style={{
-          display: 'flex',
-          width: '100%',
-          margin: 'auto',
-          padding: '20px',
-        }}
-      >
-        <SearchTool handleSearch={handleSearch} />
-      </div>
+      <>
+        <header>GITUSER APP</header>
+        <div className="App">
+          <SearchTool handleSearch={handleSearch} />
+        </div>
+        <Card username={name} />
+      </>
     </UsernameContext.Provider>
   );
 }

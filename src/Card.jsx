@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import Information from './Information';
+import './card.scss';
 
 function Card(props) {
   const [data, setData] = useState([]);
@@ -20,6 +21,7 @@ function Card(props) {
         login,
         name,
         public_repos,
+        html_url,
       } = result;
 
       const newData = {
@@ -31,6 +33,7 @@ function Card(props) {
         login,
         name,
         public_repos,
+        html_url,
       };
       return setData([...data.filter((x) => x.id !== id), newData]);
     } catch (error) {
@@ -50,40 +53,31 @@ function Card(props) {
 
   const handleDisplay = (data) => {
     return (
-      <div
-        key={data.id}
-        style={{
-          display: 'inline-block',
-          border: '5px solid black',
-          minWidth: '33%',
-          margin: '2px',
-          padding: '10px',
-          borderRadius: '4%',
-          marginTop: '10px',
-        }}
-      >
-        <Avatar picture={data.avatar_url} />
-        <Information data={data} style={{ width: '80%' }} />
-        <div style={{ margin: '0' }}>
-          <p
-            style={{ color: 'grey', fontSize: '50px' }}
-            onClick={() => {
-              filterItem(data.id);
-            }}
-          >
-            x
-          </p>
+      <div className="card" key={data.id}>
+        <div className="card__header">
+          <Avatar picture={data.avatar_url} />
+          <div className="card__close">
+            <p
+              className="card__close--body"
+              onClick={() => {
+                filterItem(data.id);
+              }}
+            >
+              x
+            </p>
+          </div>
         </div>
+        <Information data={data} />
       </div>
     );
   };
 
   const checkError = (error) => {
-    return <p style={{ padding: '10px', color: 'red' }}>{error.message}</p>;
+    return <p className="card__error">{error.message}</p>;
   };
 
   return (
-    <div className="container">
+    <div className="card-container">
       {data.reverse().map(handleDisplay)}
       {error && checkError(error)}
     </div>
